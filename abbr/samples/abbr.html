@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Replace Textarea by Code &mdash; CKEditor Sample</title>
+	<script type="text/javascript" src="../../../../ckeditor_source.js"></script>
+	<script src="../../../../_samples/sample.js" type="text/javascript"></script>
+	<link href="../../../../_samples/sample.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor Sample &mdash; Abbreviation plugin
+	</h1>
+	<div class="description">
+	<p>
+		This sample shows the very simple abbreviation plugin to quickly insert
+		or update an &lt;abbr&gt; element.
+	</p>
+	</div>
+	<div>
+		<textarea cols="80" id="editor1" name="editor1" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+		<script type="text/javascript">
+		//<![CDATA[
+
+			// This call can be placed at any point after the
+			// <textarea>, or inside a <head><script> in a
+			// window.onload event handler.
+
+
+			// Replace the <textarea id="editor"> with an CKEditor
+			// instance, using default configurations.
+			CKEDITOR.replace( 'editor1',
+			{
+				extraPlugins : 'abbr',
+				toolbar :
+				[ [ 'Source', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'Abbr', '-', 'About'] ]
+			} );
+
+		//]]>
+		</script>
+	</div>
+</body>
+</html>
