@@ -28,15 +28,6 @@ CKEDITOR.plugins.add( 'abbr',
 			icon: iconPath
 		} );
 
-		// Open dialog on double click
-		editor.on( 'doubleclick', function( evt )
-			{
-				var element = evt.data.element;
-
-				if ( element.is( 'abbr' ) && !element.data( 'cke-realelement' ) )
-					evt.data.dialog = 'abbrDialog';
-			});
-
 		// Add context menu
 		if ( editor.contextMenu )
 		{
