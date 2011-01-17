@@ -32,10 +32,35 @@
 				.replace( /&quot;/g, '"' )
 				.replace( /\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g, function( match, name, value )
 		{
-			retval[ name ] = value;
+			retval[ name.toLowerCase() ] = value;
 		} );
 		return retval;
 	}
+
+	var decodeHtml = ( function ()
+	{
+		var regex = [],
+			entities =
+			{
+				nbsp	: '\u00A0',		// IE | FF
+				shy		: '\u00AD',		// IE
+				gt		: '\u003E',		// IE | FF |   --   | Opera
+				lt		: '\u003C'		// IE | FF | Safari | Opera
+			};
+
+		for ( var entity in entities )
+			regex.push( entity );
+
+		regex = new RegExp( '&(' + regex.join( '|' ) + ');', 'g' );
+
+		return function ( html )
+		{
+			return html.replace( regex, function( match, entity )
+			{
+				return entities[ entity ];
+			})
+		}
+	})();
 
 	CKEDITOR.BBCodeParser = function()
 	{
@@ -211,9 +236,7 @@
 				if ( reset )
 					this.reset();
 
-				var span = new CKEDITOR.dom.element( 'span' );
-				span.setHtml( bbcode );
-				return span.getText();
+				return decodeHtml ( bbcode );
 			}
 		}
 	});
@@ -242,12 +265,11 @@
 						  var citeText = element.attributes.cite;
 						  if ( citeText )
 						  {
-							  var quoteText = element.children[ 0 ];
-							  var div = new CKEDITOR.htmlParser.element( 'div' ),
+							  var quoted = new CKEDITOR.htmlParser.element( 'div' ),
 									  cite = new CKEDITOR.htmlParser.element( 'cite' );
 							  cite.add( new CKEDITOR.htmlParser.text( citeText.replace( /^"|"$/g, '' ) ) )
-							  div.add( quoteText );
-							  element.children = [ cite, div  ];
+							  quoted.children = element.children;
+							  element.children = [ cite, quoted  ];
 							  delete element.attributes.cite;
 						  }
 					  },
