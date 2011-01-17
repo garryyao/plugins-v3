@@ -206,12 +206,14 @@
 
 			getHtml : function( reset )
 			{
-				var html = this._.output.join( '' );
+				var bbcode = this._.output.join( '' );
 
 				if ( reset )
 					this.reset();
 
-				return html;
+				var span = new CKEDITOR.dom.element( 'span' );
+				span.setHtml( bbcode );
+				return span.getText();
 			}
 		}
 	});
@@ -223,7 +225,7 @@
 		  {
 			  function BBCodeToHtml( code )
 			  {
-				  var fragment = CKEDITOR.htmlParser.fragment.fromHtml( code, false, new CKEDITOR.BBCodeParser() ),
+				  var fragment = CKEDITOR.htmlParser.fragment.fromHtml( CKEDITOR.tools.htmlEncode( code ), false, new CKEDITOR.BBCodeParser() ),
 						  writer = new CKEDITOR.htmlParser.basicWriter();
 
 				  fragment.writeHtml( writer, dataFilter );
@@ -384,20 +386,16 @@
 
 			  editor.on( 'editingBlockReady', function ()
 			  {
-				  var sourceMode = editor._.modes[ 'source' ];
-				  sourceMode.getData = CKEDITOR.tools.override( sourceMode.getData, function( org )
+				  var wysiwyg = editor._.modes[ 'wysiwyg' ];
+				  wysiwyg.loadData = CKEDITOR.tools.override( wysiwyg.loadData, function( org )
 				  {
-					  return function()
+					  return function( data )
 					  {
-						  return BBCodeToHtml( org.apply( this, arguments ) );
+						  return ( org.call( this, BBCodeToHtml( data ) ) );
 					  };
 				  } );
 			  } );
 
-			  editor.on( 'getData', function( evt )
-			  {
-				  evt.data.dataValue = BBCodeToHtml( evt.data.dataValue );
-			  } );
 		  }
 	  } );
 
