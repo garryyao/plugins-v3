@@ -191,7 +191,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						{
 							// Font size represents percentage.
 							if ( part == 'size' )
-								optionPart += '%';
+								optionPart += 'px';
 
 							styles[ stylesMap[ part ] ] = optionPart;
 							attribs.style = serializeStyleText( styles );
@@ -775,10 +775,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							}
 							else if ( ( value = style[ 'font-size' ] ) )
 							{
-								var percentValue = value.match( /(\d+)%$/ );
-								if ( percentValue )
+								var pixelVal = value.match( /(\d+)px$/ );
+								if ( pixelVal )
 								{
-									value = percentValue[ 1 ];
+									value = pixelVal[ 1 ];
 									tagName = 'size';
 								}
 							}
