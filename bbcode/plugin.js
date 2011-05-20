@@ -28,12 +28,31 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			tab.remove( 'txtAlt' );
 			tab.remove( 'basic' );
 		}
+		else if ( name == 'table' )
+		{
+			definition.removeContents( 'advanced' );
+			definition.minHeight = 100;
+			tab = definition.getContents( 'info' );
+			delete tab.get( 'txtRows' ).style;
+			delete tab.get( 'txtCols' ).style;
+			tab.remove( 'txtWidth' );
+			tab.remove( 'cmbWidthType' );
+			tab.remove( 'txtHeight' );
+			tab.remove( 'htmlHeightType' );
+			tab.remove( 'selHeaders' );
+			tab.remove( 'txtBorder' );
+			tab.remove( 'cmbAlign' );
+			tab.remove( 'txtCellPad' );
+			tab.remove( 'txtCellSpace' );
+			tab.remove( 'txtCaption' );
+			tab.remove( 'txtSummary' );
+		}
 	});
 
 	//  Many-to-one map from BBCode tags to their HTML element equivalents.
-	var bbcodeToHtml = { 'b' : 'strong', 'u': 'u', 'i' : 'em', 'color' : 'span', 'size' : 'span', 'quote' : 'blockquote', 'code' : 'code', 'url' : 'a', 'email' : 'span', 'img' : 'span', '*' : 'li', 'list' : 'ol' },
+	var bbcodeToHtml = { 'b' : 'strong', 'u': 'u', 'i' : 'em', 'color' : 'span', 'size' : 'span', 'quote' : 'blockquote', 'code' : 'code', 'url' : 'a', 'email' : 'span', 'img' : 'span', '*' : 'li', 'list' : 'ol', 'table' : 'table', 'tr' : 'tr', 'td': 'td' },
 			// Many-to-one map from HTML elements tags to their BBCode tag equivalents.
-			htmlToBBCode = { 'strong' : 'b', 'em' : 'i', 'u' : 'u', 'li' : '*', 'ul' : 'list', 'ol' : 'list', 'code' : 'code', 'a' : 'link', 'img' : 'img', 'blockquote' : 'quote' },
+			htmlToBBCode = { 'strong' : 'b', 'em' : 'i', 'u' : 'u', 'li' : '*', 'ul' : 'list', 'ol' : 'list', 'code' : 'code', 'a' : 'link', 'img' : 'img', 'blockquote' : 'quote', 'table' : 'table', 'tr' : 'tr', 'td': 'td' },
 			stylesMap = { 'color' : 'color', 'size' : 'font-size' },
 			attributesMap = { 'url' : 'href', 'email' : 'mailhref', 'quote': 'cite', 'list' : 'listType' };
 
@@ -518,6 +537,31 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			   breakBeforeClose : 0,
 			   breakAfterClose : 1
 		   } );
+
+			// Table, rows and cells
+			this.setRules( 'table',
+		   {
+			   breakBeforeOpen : 1,
+			   breakAfterOpen : 1,
+			   breakBeforeClose : 1,
+			   breakAfterClose : 1
+		   } );
+
+			this.setRules( 'tr',
+		   {
+			   breakBeforeOpen : 1,
+			   breakAfterOpen : 1,
+			   breakBeforeClose : 1,
+			   breakAfterClose : 1
+		   } );
+
+			this.setRules( 'td',
+		   {
+			   breakBeforeOpen : 0,
+			   breakAfterOpen : 0,
+			   breakBeforeClose : 0,
+			   breakAfterClose : 0
+		   } );
 		},
 
 		proto :
@@ -893,6 +937,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					  };
 				  } );
 			  } );
+
+			  editor.removeMenuItem( 'tablecell_properties');
+			  editor.removeMenuItem( 'table');
 		  },
 
 		  afterInit : function( editor )
