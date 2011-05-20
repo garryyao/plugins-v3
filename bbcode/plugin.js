@@ -31,9 +31,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	});
 
 	//  Many-to-one map from BBCode tags to their HTML element equivalents.
-	var bbcodeToHtml = { 'b' : 'strong', 'u': 'u', 'i' : 'em', 's' : 'strike','color' : 'span', 'size' : 'span', 'quote' : 'blockquote', 'code' : 'code', 'url' : 'a', 'email' : 'span', 'img' : 'span', '*' : 'li', 'list' : 'ol' },
+	var bbcodeToHtml = { 'b' : 'strong', 'u': 'u', 'i' : 'em', 'color' : 'span', 'size' : 'span', 'quote' : 'blockquote', 'code' : 'code', 'url' : 'a', 'email' : 'span', 'img' : 'span', '*' : 'li', 'list' : 'ol' },
 			// Many-to-one map from HTML elements tags to their BBCode tag equivalents.
-			htmlToBBCode = { 'strong' : 'b', 'em' : 'i', 'u' : 'u', 'strike':'s', 'li' : '*', 'ul' : 'list', 'ol' : 'list', 'code' : 'code', 'a' : 'link', 'img' : 'img', 'blockquote' : 'quote' },
+			htmlToBBCode = { 'strong' : 'b', 'em' : 'i', 'u' : 'u', 'li' : '*', 'ul' : 'list', 'ol' : 'list', 'code' : 'code', 'a' : 'link', 'img' : 'img', 'blockquote' : 'quote' },
 			stylesMap = { 'color' : 'color', 'size' : 'font-size' },
 			attributesMap = { 'url' : 'href', 'email' : 'mailhref', 'quote': 'cite', 'list' : 'listType' };
 
